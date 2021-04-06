@@ -1,0 +1,22 @@
+21
+locationCity	0
+locatedInArea	1
+sourceCountry	2
+mouthCountry	3
+nearestCity	4
+broadcastArea	5
+mouthMountain	6
+mouthPlace	7
+mouthRegion	8
+crosses	9
+mountainRange	10
+inflow	11
+outflow	12
+majorIsland	13
+riverMouth	14
+department	15
+river	16
+island	17
+parentMountainPeak	18
+rightTributary	19
+leftTributary	20
