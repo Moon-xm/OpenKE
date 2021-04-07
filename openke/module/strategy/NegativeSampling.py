@@ -12,19 +12,19 @@ class NegativeSampling(Strategy):
 
 	def _get_positive_score(self, score):
 		positive_score = score[:self.batch_size]
-		positive_score = positive_score.view(-1, self.batch_size).permute(1, 0)
+		positive_score = positive_score.view(-1, self.batch_size).permute(1, 0)  # [B, 1]
 		return positive_score
 
 	def _get_negative_score(self, score):
 		negative_score = score[self.batch_size:]
-		negative_score = negative_score.view(-1, self.batch_size).permute(1, 0)
+		negative_score = negative_score.view(-1, self.batch_size).permute(1, 0)  # [B, neg_num]
 		return negative_score
 
 	def forward(self, data):
-		score = self.model(data)  # margin - (h+r-t)
+		score = self.model(data)  # (h+r-t)
 		p_score = self._get_positive_score(score)
 		n_score = self._get_negative_score(score)
-		loss_res = self.loss(p_score, n_score)
+		loss_res = self.loss(p_score, n_score)  # size=1
 		if self.regul_rate != 0:
 			loss_res += self.regul_rate * self.model.regularization(data)
 		if self.l3_regul_rate != 0:

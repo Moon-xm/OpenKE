@@ -30,9 +30,9 @@ class Trainer(object):
 
 		self.opt_method = opt_method
 		self.optimizer = None
-		self.lr_decay = 0
+		self.lr_decay = 0  # learning rate decay
 		self.weight_decay = 0
-		self.alpha = alpha
+		self.alpha = alpha  # 学习率
 
 		self.model = model
 		self.data_loader = data_loader

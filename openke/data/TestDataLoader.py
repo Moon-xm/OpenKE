@@ -65,20 +65,20 @@ class TestDataLoader(object):
 		self.entTotal = self.lib.getEntityTotal()
 		self.testTotal = self.lib.getTestTotal()
 
-		self.test_h = np.zeros(self.entTotal, dtype=np.int64)
+		self.test_h = np.zeros(self.entTotal, dtype=np.int64)  # ent num
 		self.test_t = np.zeros(self.entTotal, dtype=np.int64)
 		self.test_r = np.zeros(self.entTotal, dtype=np.int64)
-		self.test_h_addr = self.test_h.__array_interface__["data"][0]
+		self.test_h_addr = self.test_h.__array_interface__["data"][0]  # address
 		self.test_t_addr = self.test_t.__array_interface__["data"][0]
 		self.test_r_addr = self.test_r.__array_interface__["data"][0]
 
-		self.test_pos_h = np.zeros(self.testTotal, dtype=np.int64)
+		self.test_pos_h = np.zeros(self.testTotal, dtype=np.int64)  # test num
 		self.test_pos_t = np.zeros(self.testTotal, dtype=np.int64)
 		self.test_pos_r = np.zeros(self.testTotal, dtype=np.int64)
 		self.test_pos_h_addr = self.test_pos_h.__array_interface__["data"][0]
 		self.test_pos_t_addr = self.test_pos_t.__array_interface__["data"][0]
 		self.test_pos_r_addr = self.test_pos_r.__array_interface__["data"][0]
-		self.test_neg_h = np.zeros(self.testTotal, dtype=np.int64)
+		self.test_neg_h = np.zeros(self.testTotal, dtype=np.int64)  # test num
 		self.test_neg_t = np.zeros(self.testTotal, dtype=np.int64)
 		self.test_neg_r = np.zeros(self.testTotal, dtype=np.int64)
 		self.test_neg_h_addr = self.test_neg_h.__array_interface__["data"][0]
@@ -89,7 +89,7 @@ class TestDataLoader(object):
 		res = []
 		self.lib.getHeadBatch(self.test_h_addr, self.test_t_addr, self.test_r_addr)
 		res.append({
-			"batch_h": self.test_h.copy(), 
+			"batch_h": self.test_h.copy(),   # [0, ..., ent_num]
 			"batch_t": self.test_t[:1].copy(), 
 			"batch_r": self.test_r[:1].copy(),
 			"mode": "head_batch"
@@ -97,7 +97,7 @@ class TestDataLoader(object):
 		self.lib.getTailBatch(self.test_h_addr, self.test_t_addr, self.test_r_addr)
 		res.append({
 			"batch_h": self.test_h[:1],
-			"batch_t": self.test_t,
+			"batch_t": self.test_t,  # [0, ..., ent_num]
 			"batch_r": self.test_r[:1],
 			"mode": "tail_batch"
 		})

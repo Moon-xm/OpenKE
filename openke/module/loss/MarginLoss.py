@@ -11,7 +11,7 @@ class MarginLoss(Loss):
 		super(MarginLoss, self).__init__()
 		self.margin = nn.Parameter(torch.Tensor([margin]))
 		self.margin.requires_grad = False
-		if adv_temperature != None:
+		if adv_temperature != None:  # ?
 			self.adv_temperature = nn.Parameter(torch.Tensor([adv_temperature]))
 			self.adv_temperature.requires_grad = False
 			self.adv_flag = True
@@ -21,11 +21,12 @@ class MarginLoss(Loss):
 	def get_weights(self, n_score):
 		return F.softmax(-n_score * self.adv_temperature, dim = -1).detach()
 
-	def forward(self, p_score, n_score):
+	def forward(self, p_score, n_score):  # p_score: [B, 1] n_score: [B, neg_num]
 		if self.adv_flag:
 			return (self.get_weights(n_score) * torch.max(p_score - n_score, -self.margin)).sum(dim = -1).mean() + self.margin
 		else:
-			return (torch.max(p_score - n_score, -self.margin)).mean() + self.margin
+			return (torch.max(p_score - n_score, -self.margin)).mean() + self.margin  # 为何求mean?
+		# torch.max(p_score - n_score, -self.margin)返回p-n与-margin中更大的值
 			
 	
 	def predict(self, p_score, n_score):

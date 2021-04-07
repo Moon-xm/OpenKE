@@ -56,7 +56,7 @@ class TransE(Model):
 			score = h + (r - t)
 		else:
 			score = (h + r) - t
-		score = torch.norm(score, self.p_norm, -1).flatten()  # flatten:推平 (0,-1]
+		score = torch.norm(score, self.p_norm, -1).flatten()  # norm求l1/l2范数 flatten:推平 (0,-1]
 		return score
 
 	def forward(self, data):
