@@ -67,7 +67,7 @@ class Tester(object):
             'mode': data['mode']
         })
 
-    def run_link_prediction(self, type_constrain = False):
+    def run_link_prediction(self, type_constrain = False):  # 预测头实体/尾实体
         self.lib.initTest()
         self.data_loader.set_sampling_mode('link')
         if type_constrain:

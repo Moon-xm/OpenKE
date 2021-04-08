@@ -12,7 +12,7 @@ train_dataloader = TrainDataLoader(
 	threads = 8, 
 	sampling_mode = "normal", 
 	bern_flag = 1, 
-	filter_flag = 1, 
+	filter_flag = 1,  # set_bern(0) will use the traditional sampling method, and set_bern(1) will use the method in (Wang et al. 2014) denoted as “bern”.
 	neg_ent = 25,
 	neg_rel = 0)
 
