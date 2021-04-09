@@ -8,7 +8,7 @@ from openke.data import TrainDataLoader, TestDataLoader
 # dataloader for training
 train_dataloader = TrainDataLoader(
 	in_path = "./benchmarks/GADM9/", 
-	nbatches = 100,
+	nbatches = 150,
 	threads = 8, 
 	sampling_mode = "normal", 
 	bern_flag = 1, 
@@ -57,7 +57,8 @@ transe.save_parameters("./result/GADM9_transr_transe.json")
 
 # train transr
 transr.set_parameters(parameters)
-trainer = Trainer(model = model_r, data_loader = train_dataloader, train_times = 100, alpha = 1.0, use_gpu = True)
+trainer = Trainer(model = model_r, data_loader = train_dataloader, train_times = 10, alpha = 1, use_gpu = True)
+print('lambda: {}, gamma: {}, k: {}'.format(trainer.alpha, model_r.loss.margin.item(), transr.dim_e))
 trainer.run()
 transr.save_checkpoint('./checkpoint/GADM9_transr.ckpt')
 

@@ -1,6 +1,6 @@
 import openke
 from openke.config import Trainer, Tester
-from openke.module.model import TransE
+from openke.module.model import TransD
 from openke.module.loss import MarginLoss
 from openke.module.strategy import NegativeSampling
 from openke.data import TrainDataLoader, TestDataLoader
@@ -20,28 +20,28 @@ train_dataloader = TrainDataLoader(
 test_dataloader = TestDataLoader("./benchmarks/FB15K237/", "link")
 
 # define the model
-# import ipdb; ipdb.set_trace()
-transe = TransE(
+transd = TransD(
 	ent_tot = train_dataloader.get_ent_tot(),
 	rel_tot = train_dataloader.get_rel_tot(),
-	dim = 200, 
+	dim_e = 100, 
+	dim_r = 100, 
 	p_norm = 1, 
 	norm_flag = True)
 
-# print(transe)
+
 # define the loss function
 model = NegativeSampling(
-	model = transe, 
-	loss = MarginLoss(margin = 5.0),
+	model = transd, 
+	loss = MarginLoss(margin = 1.0),
 	batch_size = train_dataloader.get_batch_size()
 )
 
 # train the model
 trainer = Trainer(model = model, data_loader = train_dataloader, train_times = 1000, alpha = 1.0, use_gpu = True)
 trainer.run()
-transe.save_checkpoint('./checkpoint/transe.ckpt')
+transd.save_checkpoint('./checkpoint/transd.ckpt')
 
 # test the model
-transe.load_checkpoint('./checkpoint/transe.ckpt')
-tester = Tester(model = transe, data_loader = test_dataloader, use_gpu = True)
+transd.load_checkpoint('./checkpoint/transd.ckpt')
+tester = Tester(model = transd, data_loader = test_dataloader, use_gpu = True)
 tester.run_link_prediction(type_constrain = False)
